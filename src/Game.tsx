@@ -254,6 +254,9 @@ function GameComponent() {
               右
             </button>
           </div>
+          <p class="text-gray-500 dark:text-gray-400 text-center">
+            矢印キーでも回答できます
+          </p>
         </div>
 
         <div class="absolute top-4 right-4">
