@@ -1,7 +1,10 @@
+import { Game } from "./Game";
+import { Layout } from "./Layout";
+
 export function App() {
   return (
-    <>
-	  <h1>notore-simon</h1>
-    </>
+    <Layout>
+	  <Game />
+    </Layout>
   )
 }
