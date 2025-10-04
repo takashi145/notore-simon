@@ -1,5 +1,5 @@
 export const Logo = () => {
 	return (
-		<img src="vite.svg" alt="脳トレ|サイモン効果" class="w-24 h-24" />
+		<img src="logo.svg" alt="脳トレ|サイモン効果" class="w-32 h-32" />
 	)
 }
