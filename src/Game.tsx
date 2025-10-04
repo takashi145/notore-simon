@@ -37,6 +37,25 @@ function GameComponent() {
   const [countdown, setCountdown] = useState<number | null>(null) // ゲーム開始前のカウントダウン
   const [positionOffset, setPositionOffset] = useState(0) // 位置のオフセット
 
+  // 矢印キーでも回答できるようにする
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!gameStarted || disabled) return
+
+    if (event.key === 'ArrowLeft') {
+      handleAnswer('左')
+    } else if (event.key === 'ArrowRight') {
+      handleAnswer('右')
+    }
+  }
+
+  // キーイベントの登録・解除
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [gameStarted, disabled, displayText, displayPosition, result])
+
   // ゲーム開始
   const startGame = (selectedMode: GameMode) => {
     setMode(selectedMode)
