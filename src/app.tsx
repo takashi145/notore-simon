@@ -1,9 +1,10 @@
+import { Game } from "./Game";
 import { Layout } from "./Layout";
 
 export function App() {
   return (
     <Layout>
-	  <h1>notore-simon</h1>
+	  <Game />
     </Layout>
   )
 }
