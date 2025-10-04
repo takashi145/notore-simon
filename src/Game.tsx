@@ -9,7 +9,7 @@ const TEXTS = ['右', '左'] as const
 type Position = 'left' | 'right'
 
 // 位置の表示用マッピング
-const POSITION_MAP: Record<Position, string> = {
+const POSITION_MAP: Record<Position, typeof TEXTS[number]> = {
   'left': '左',
   'right': '右',
 }
@@ -36,16 +36,20 @@ function GameComponent() {
   const [totalAnswers, setTotalAnswers] = useState(0)
   const [countdown, setCountdown] = useState<number | null>(null) // ゲーム開始前のカウントダウン
   const [positionOffset, setPositionOffset] = useState(0) // 位置のオフセット
+  const [pressedButton, setPressedButton] = useState<typeof TEXTS[number] | null>(null) // 押されたボタン
 
   // 矢印キーでも回答できるようにする
   const handleKeyDown = (event: KeyboardEvent) => {
     if (!gameStarted || disabled) return
 
     if (event.key === 'ArrowLeft') {
+      setPressedButton('左')
       handleAnswer('左')
     } else if (event.key === 'ArrowRight') {
+      setPressedButton('右')
       handleAnswer('右')
     }
+    setTimeout(() => setPressedButton(null), 100)
   }
 
   // キーイベントの登録・解除
@@ -224,16 +228,28 @@ function GameComponent() {
 
           <div class="grid grid-cols-2 gap-6 max-w-sm mx-auto">
             <button
-              class="aspect-square text-xl sm:text-2xl font-bold rounded-xl border-4 border-blue-500 text-blue-500 shadow-lg flex items-center justify-center transition-all disabled:opacity-40 enabled:hover:scale-105 disabled:enabled:active:scale-95 enabled:cursor-pointer"
+              class={`aspect-square text-xl sm:text-2xl font-bold rounded-xl border-4 border-blue-500 text-blue-500 shadow-lg flex items-center justify-center transition-all disabled:opacity-40 enabled:hover:scale-105 disabled:enabled:active:scale-95 enabled:cursor-pointer ${
+                pressedButton === '左' ? 'scale-95 bg-blue-50 dark:bg-blue-900/20' : ''
+              }`}
               disabled={disabled || result !== null}
-              onClick={() => handleAnswer('左')}
+              onClick={() => {
+                setPressedButton('左')
+                handleAnswer('左')
+                setTimeout(() => setPressedButton(null), 100)
+              }}
             >
               左
             </button>
             <button
-              class="aspect-square text-xl sm:text-2xl font-bold rounded-xl border-4 border-purple-500 text-purple-500 shadow-lg flex items-center justify-center transition-all disabled:opacity-40 enabled:hover:scale-105 disabled:enabled:active:scale-95 enabled:cursor-pointer"
+              class={`aspect-square text-xl sm:text-2xl font-bold rounded-xl border-4 border-purple-500 text-purple-500 shadow-lg flex items-center justify-center transition-all disabled:opacity-40 enabled:hover:scale-105 disabled:enabled:active:scale-95 enabled:cursor-pointer ${
+                pressedButton === '右' ? 'scale-95 bg-purple-50 dark:bg-purple-900/20' : ''
+              }`}
               disabled={disabled || result !== null}
-              onClick={() => handleAnswer('右')}
+              onClick={() => {
+                setPressedButton('右')
+                handleAnswer('右')
+                setTimeout(() => setPressedButton(null), 100)
+              }}
             >
               右
             </button>
