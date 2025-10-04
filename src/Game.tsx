@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'preact/hooks'
+import { memo } from 'preact/compat'
 import { Logo } from './Logo'
 
 // 使用する文字
@@ -23,7 +24,7 @@ const GAME_TIME_LIMIT = 60 // ゲームの制限時間（秒）
 
 type GameMode = 'text' | 'position'
 
-export function Game() {
+function GameComponent() {
   const [gameStarted, setGameStarted] = useState(false)
   const [mode, setMode] = useState<GameMode | null>(null)
   const [score, setScore] = useState(0)
@@ -317,3 +318,5 @@ export function Game() {
     </>
   )
 }
+
+export const Game = memo(GameComponent)
